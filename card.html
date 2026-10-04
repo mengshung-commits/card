@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>為你準備的專屬驚喜 ✨</title>
+    <style>
+        /* 基礎背景與精緻氛圍 */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%); /* 換成溫馨的淡粉色漸層，更搭生日主題 */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 提示文字 */
+        .hint {
+            color: #9b2c2c;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            animation: blink 2.5s infinite ease-in-out;
+        }
+
+        /* RWD 響應式卡片容器 (完美符合 16:9 橫式照片比例) */
+        .card-container {
+            width: 90vw;            /* 手機滿版：佔螢幕寬度 90% */
+            max-width: 480px;       /* 電腦或大螢幕時的最大限制，避免過大 */
+            aspect-ratio: 16 / 9;   /* 鎖定 16:9 完美比例，圖片絕不變形 */
+            perspective: 1500px;    /* 加深 3D 立體翻轉透視 */
+            cursor: pointer;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(155, 44, 44, 0.15), 
+                        0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        /* 手機按壓時的微縮反饋 */
+        .card-container:active .card {
+            transform: scale(0.96); 
+        }
+
+        /* 上下翻轉 */
+        .card.flipped {
+            transform: rotateX(180deg);
+        }
+        
+        .card-container:active .card.flipped {
+            transform: rotateX(180deg) scale(0.96);
+        }
+
+        /* 卡片正面與背面共用樣式 */
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            overflow: hidden; 
+            background-color: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* 讓橫式照片完美填滿 */
+        .card-face img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* 改為 contain 確保整張圖完整顯示，不被裁切 */
+            background-color: #fff6f6; /* 如果有極微小空隙，用底色完美隱藏 */
+            display: block;
+        }
+
+        /* 卡片背面預先旋轉 */
+        .card-back {
+            transform: rotateX(180deg);
+        }
+
+        /* 提示動畫 */
+        @keyframes blink {
+            0%, 100% { opacity: 0.5; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(-4px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hint">🎂 點擊卡片上下翻面 🎂</div>
+
+    <div class="card-container" onclick="flipCard()">
+        <div class="card" id="myCard">
+            <!-- 橫式正面照片 -->
+            <div class="card-face card-front">
+                <img src="https://i.postimg.cc/PJZn4H0C/1.png" alt="正面照片">
+            </div>
+            <!-- 橫式背面照片 -->
+            <div class="card-face card-back">
+                <img src="https://i.postimg.cc/zGpZp02x/2.png" alt="背面照片">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function flipCard() {
+            const card = document.getElementById('myCard');
+            card.classList.toggle('flipped');
+        }
+    </script>
+</body>
+</html>
